@@ -66,9 +66,9 @@ jobs:
         id: vars
         run: echo "TAG=$(date +'%Y-%m-%d--%H-%M-%S')" >> $GITHUB_OUTPUT
 
-      # Build à partir du dossier pipeline-main et de son Dockerfile
+      # Build à partir du dossier courant (pipeline-main déjà défini comme working-directory)
       - name: Build image
-        run: docker build pipeline-main -f pipeline-main/Dockerfile -t $DOCKER_USER/$REPO_NAME:${{ steps.vars.outputs.TAG }}
+        run: docker build . -f Dockerfile -t $DOCKER_USER/$REPO_NAME:${{ steps.vars.outputs.TAG }}
 
       - name: Push image
         run: docker push $DOCKER_USER/$REPO_NAME:${{ steps.vars.outputs.TAG }}
